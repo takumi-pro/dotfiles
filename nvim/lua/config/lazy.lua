@@ -27,7 +27,7 @@ require("lazy").setup({
       vim.opt.termguicolors = true
 
       require("catppuccin").setup({
-        flavour = "mocha",
+        flavour = "frappe",
         integrations = {
           treesitter = true,
         },
@@ -100,10 +100,22 @@ require("lazy").setup({
       win_options = {
         signcolumn = "yes:2",  -- Space for git status icons
       },
+      colums = {
+        "icons",
+        "size",
+      },
     },
     config = function(_, opts)
       require("oil").setup(opts)
       require("oil-git-status").setup()
+    end,
+  },
+
+  {
+    "echasnovski/mini.icons",
+    lazy = false,
+    config = function()
+      require("mini.icons").setup()
     end,
   },
 
@@ -221,6 +233,29 @@ require("lazy").setup({
       { "<C-j>", "<cmd>TmuxNavigateDown<cr>",  desc = "Navigate down" },
       { "<C-k>", "<cmd>TmuxNavigateUp<cr>",    desc = "Navigate up" },
       { "<C-l>", "<cmd>TmuxNavigateRight<cr>", desc = "Navigate right" },
+    },
+  },
+
+  {
+    "lewis6991/gitsigns.nvim",
+    event = "BufReadPre",
+    opts = {
+      on_attach = function(bufnr)
+        local gs = package.loaded.gitsigns
+
+        -- hunk単位でstage/unstage
+        vim.keymap.set('n', '<leader>hs', gs.stage_hunk,      { buffer = bufnr, desc = 'Stage hunk' })
+        vim.keymap.set('n', '<leader>hu', gs.undo_stage_hunk, { buffer = bufnr, desc = 'Unstage hunk' })
+
+        -- 選択範囲でstage/unstage
+        vim.keymap.set('v', '<leader>hs', function()
+          gs.stage_hunk({ vim.fn.line('.'), vim.fn.line('v') })
+        end, { buffer = bufnr, desc = 'Stage selected hunk' })
+
+        -- hunk間の移動
+        vim.keymap.set('n', ']h', gs.next_hunk, { buffer = bufnr, desc = 'Next hunk' })
+        vim.keymap.set('n', '[h', gs.prev_hunk, { buffer = bufnr, desc = 'Prev hunk' })
+      end,
     },
   },
 })

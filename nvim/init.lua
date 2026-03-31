@@ -23,7 +23,18 @@ vim.opt.ignorecase = true      -- 検索で大文字小文字を無視
 vim.opt.smartcase = true       -- 大文字を含む場合は区別する
 vim.opt.hlsearch = true        -- 検索結果をハイライト
 vim.opt.incsearch = true       -- インクリメンタルサーチ
+vim.opt.autoread = true
+vim.opt.signcolumn = "yes"
 
+-- ファイル変更時に自動リロード
+vim.api.nvim_create_autocmd({ "FocusGained", "BufEnter", "CursorHold", "CursorHoldI" }, {
+  pattern = "*",
+  callback = function()
+    if vim.fn.mode() ~= "c" then
+      vim.cmd("checktime")
+    end
+  end,
+})
 
 -- =============================================================================
 -- キーマップ

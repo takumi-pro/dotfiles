@@ -16,6 +16,8 @@ main() {
   thm_blue="#8caaee"
   thm_orange="#ef9f76"
   thm_black4="#626880"
+  thm_dark_blue="#1e2030"  # より青みがかった暗い色
+  thm_surface0="#414559"
 
   separator="#[fg=${thm_gray},bg=default,none]▕#[default]"
 
@@ -28,16 +30,17 @@ main() {
   tmux set -g status "on"
   tmux set -g status-position "top"
   tmux set -g status-justify "right"
-  tmux set -g status-style "none"
+  tmux set -g status-style "bg=${thm_surface0}"
 
   # left panel
   tmux set -g status-left-length 100
   tmux set -g status-left-style "none,fg=${thm_black4},align=right"
 
   # git info using standard git commands
-  show_git_info="cd #{pane_current_path} && git rev-parse --is-inside-work-tree >/dev/null 2>&1 && echo \" \$(basename \$(git rev-parse --show-toplevel)) ${separator}  \$(git rev-parse --abbrev-ref HEAD | cut -c1-24) ${separator}\""
+  # show_git_info="cd #{pane_current_path} && git rev-parse --is-inside-work-tree >/dev/null 2>&1 && echo \" \$(basename \$(git rev-parse --show-toplevel)) ${separator}  \$(git rev-parse --abbrev-ref HEAD | cut -c1-24) ${separator}\""
+  show_git_info="cd #{pane_current_path} && git rev-parse --is-inside-work-tree >/dev/null 2>&1 && echo \"#[fg=${thm_green}] \$(basename \$(git rev-parse --show-toplevel))#[default] ${separator} #[fg=${thm_yellow}]  \$(git rev-parse --abbrev-ref HEAD | cut -c1-24)#[default] ${separator}\""
 
-  tmux set -g status-left " #S ${separator} #(${show_git_info})"
+  tmux set -g status-left " #[fg=${thm_fg}]#S#[default] ${separator} #(${show_git_info})"
 
   # right panel
   tmux set -g status-right-style "none"
