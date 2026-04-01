@@ -338,10 +338,10 @@ require("lazy").setup({
         mode = "n",
         body = "<C-w>",
         heads = {
-          { "H", "<cmd>vertical resize +2<cr>" },
-          { "J", "<cmd>resize +2<cr>" },
-          { "K", "<cmd>resize -2<cr>" },
-          { "L", "<cmd>vertical resize -2<cr>" },
+          { "H", "<cmd>vertical resize -2<cr>" },
+          { "J", "<cmd>resize -2<cr>" },
+          { "K", "<cmd>resize +2<cr>" },
+          { "L", "<cmd>vertical resize +2<cr>" },
         },
       })
     end,
