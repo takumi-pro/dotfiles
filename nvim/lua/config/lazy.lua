@@ -87,8 +87,8 @@ require("lazy").setup({
       keymaps = {
         ["<C-h>"] = false,
         ["<C-l>"] = false,
-        ["<C-x>"] = { "actions.select_vsplit", desc = "Open in vertical split" },
-        ["<C-s>"] = { "actions.select_split", desc = "Open in horizontal split" },
+        ["sv"] = { "actions.select_vsplit", desc = "Open in vertical split" },
+        ["ss"] = { "actions.select_split", desc = "Open in horizontal split" },
         ["<C-p>"] = "actions.preview",       -- Preview file
         ["`"]     = "actions.cd",            -- Change directory
         ["g."]    = "actions.toggle_hidden", -- Toggle hidden files
@@ -327,13 +327,33 @@ require("lazy").setup({
     },
   },
 
+  -- 特定キーをprefixに連続操作を可能に
+  {
+    "nvimtools/hydra.nvim",
+    config = function()
+      local Hydra = require("hydra")
+
+      Hydra({
+        name = "Window resize",
+        mode = "n",
+        body = "<C-w>",
+        heads = {
+          { "H", "<cmd>vertical resize +2<cr>" },
+          { "J", "<cmd>resize +2<cr>" },
+          { "K", "<cmd>resize -2<cr>" },
+          { "L", "<cmd>vertical resize -2<cr>" },
+        },
+      })
+    end,
+  },
+
   -- 自動で括弧等を閉じてくれる
-  -- {
-  --   "windwp/nvim-autopairs",
-  --   event = "InsertEnter",
-  --   opts = {},
-  -- },
-  --
+  {
+    "windwp/nvim-autopairs",
+    event = "InsertEnter",
+    opts = {},
+  },
+
   -- {
   --   "folke/noice.nvim",
   --   event = "VeryLazy",
