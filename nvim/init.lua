@@ -25,6 +25,7 @@ vim.opt.hlsearch = true        -- 検索結果をハイライト
 vim.opt.incsearch = true       -- インクリメンタルサーチ
 vim.opt.autoread = true
 vim.opt.signcolumn = "yes"
+vim.opt.cmdheight = 0  -- 普段は非表示
 
 -- ファイル変更時に自動リロード
 vim.api.nvim_create_autocmd({ "FocusGained", "BufEnter", "CursorHold", "CursorHoldI" }, {
@@ -62,6 +63,12 @@ vim.keymap.set('n', '<C-h>', '<cmd>TmuxNavigateLeft<cr>',  { desc = 'Navigate le
 vim.keymap.set('n', '<C-j>', '<cmd>TmuxNavigateDown<cr>',  { desc = 'Navigate down' })
 vim.keymap.set('n', '<C-k>', '<cmd>TmuxNavigateUp<cr>',    { desc = 'Navigate up' })
 vim.keymap.set('n', '<C-l>', '<cmd>TmuxNavigateRight<cr>', { desc = 'Navigate right' })
+
+-- 画面入れ替え
+vim.keymap.set('n', '<C-w>h', '<C-w>H', { desc = 'Swap window left' })
+vim.keymap.set('n', '<C-w>j', '<C-w>J', { desc = 'Swap window down' })
+vim.keymap.set('n', '<C-w>k', '<C-w>K', { desc = 'Swap window up' })
+vim.keymap.set('n', '<C-w>l', '<C-w>L', { desc = 'Swap window right' })
 
 -- 相対パスをコピー
 vim.keymap.set('n', '<leader>yr', function()

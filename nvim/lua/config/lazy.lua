@@ -100,9 +100,8 @@ require("lazy").setup({
       win_options = {
         signcolumn = "yes:2",  -- Space for git status icons
       },
-      colums = {
-        "icons",
-        "size",
+      columns = {
+        "icon",
       },
     },
     config = function(_, opts)
@@ -258,4 +257,105 @@ require("lazy").setup({
       end,
     },
   },
+
+  -- インデントを可視化
+  {
+    "lukas-reineke/indent-blankline.nvim",
+    event = "BufReadPre",
+    main = "ibl",
+    opts = {
+      indent = {
+        char = "│",
+      },
+      scope = {
+        show_start = false,
+        show_end = false,
+      },
+    },
+  },
+
+  {
+    "b0o/incline.nvim",
+    event = "BufReadPre",
+    config = function()
+      local colors = {
+        bg       = "#414559",
+        fg       = "#c6d0f5",
+        modified = "#e78284",
+        icon     = "#8caaee",
+      }
+
+      require("incline").setup({
+        render = function(props)
+          local filename = vim.fn.fnamemodify(vim.api.nvim_buf_get_name(props.buf), ":t")
+          if filename == "" then filename = "[No Name]" end
+          local modified = vim.bo[props.buf].modified
+          local icon, _ = require("mini.icons").get("file", filename)
+
+          return {
+            { icon .. " ",                     guifg = colors.icon },
+            { filename,                        guifg = colors.fg },
+            { modified and " ●" or "",         guifg = colors.modified },
+          }
+        end,
+        window = {
+          padding = 1,
+          margin = { horizontal = 1, vertical = 1 },
+          winhighlight = {
+            Normal = "Normal",
+            EndOfBuffer = "Normal",
+          },
+          zindex = 50,
+        },
+      })
+    end,
+  },
+
+  -- モードを色で表現
+  {
+    "mvllow/modes.nvim",
+    event = { "CursorMoved", "CursorMovedI" },
+    opts = {
+      colors = {
+        -- Catppuccin Frappe
+        copy    = "#e5c890",  -- yellow
+        delete  = "#e78284",  -- red
+        insert  = "#a6d189",  -- green
+        visual  = "#ca9ee6",  -- mauve
+      },
+      line_opacity = 0.3,  -- カーソルラインの色の濃さ
+    },
+  },
+
+  -- 自動で括弧等を閉じてくれる
+  -- {
+  --   "windwp/nvim-autopairs",
+  --   event = "InsertEnter",
+  --   opts = {},
+  -- },
+  --
+  -- {
+  --   "folke/noice.nvim",
+  --   event = "VeryLazy",
+  --   dependencies = {
+  --     "MunifTanjim/nui.nvim",
+  --     "rcarriga/nvim-notify",
+  --   },
+  --   opts = {
+  --     lsp = {
+  --       override = {
+  --         ["vim.lsp.util.convert_input_to_markdown_lines"] = true,
+  --         ["vim.lsp.util.stylize_markdown"] = true,
+  --         ["cmp.entry.get_docs"] = true,
+  --       },
+  --     },
+  --     presets = {
+  --       bottom_search = true,         -- 検索をボトムに表示
+  --       command_palette = true,       -- コマンドパレットスタイル
+  --       long_message_to_split = true, -- 長いメッセージをsplitで表示
+  --       inc_rename = false,
+  --     },
+  --   },
+  -- },
+
 })
