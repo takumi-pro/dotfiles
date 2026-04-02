@@ -40,9 +40,9 @@ main() {
 
   # git info using standard git commands
   # show_git_info="cd #{pane_current_path} && git rev-parse --is-inside-work-tree >/dev/null 2>&1 && echo \" \$(basename \$(git rev-parse --show-toplevel)) ${separator}  \$(git rev-parse --abbrev-ref HEAD | cut -c1-24) ${separator}\""
-  show_git_info="cd #{pane_current_path} && git rev-parse --is-inside-work-tree >/dev/null 2>&1 && echo \"#[fg=${thm_green}] \$(basename \$(git rev-parse --show-toplevel))#[default] ${separator} #[fg=${thm_yellow}]  \$(git rev-parse --abbrev-ref HEAD | cut -c1-24)#[default] ${separator}\""
+  show_git_info="cd #{pane_current_path} && git rev-parse --is-inside-work-tree >/dev/null 2>&1 && echo \"#[fg=${thm_green}] \$(basename \$(git rev-parse --show-toplevel))#[default] ${separator} #[fg=${thm_yellow}] \$(git rev-parse --abbrev-ref HEAD | cut -c1-24)#[default] ${separator}\""
 
-  tmux set -g status-left " #[fg=${thm_fg}]#S#[default] ${separator} #(${show_git_info})"
+  tmux set -g status-left " #[fg=${thm_blue}] #[fg=${thm_fg}]#S#[default] ${separator} #(${show_git_info})"
 
   # right panel
   tmux set -g status-right-style "none"
