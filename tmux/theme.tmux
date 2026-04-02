@@ -23,8 +23,10 @@ main() {
 
   tmux set -g message-command-style "align=right,fg=${thm_blue}"
   tmux set -g message-style "align=right,fg=${thm_blue},align=centre"
-  tmux set -g pane-active-border-style "fg=${thm_black4}"
+  tmux set -g pane-active-border-style "fg=${thm_blue}"
   tmux set -g pane-border-style "fg=${thm_black}"
+  tmux set -g window-style "fg=${thm_black4},bg=#2a2d3d"
+  tmux set -g window-active-style "fg=${thm_fg},bg=#2d3044"
 
   # status bar
   tmux set -g status "on"
