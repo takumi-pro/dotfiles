@@ -354,6 +354,45 @@ require("lazy").setup({
     opts = {},
   },
 
+  -- bufferをみやすく
+  {
+    "akinsho/bufferline.nvim",
+    event = "VeryLazy",
+    keys = {
+      { "[b", "<cmd>BufferLineCyclePrev<cr>", desc = "Prev buffer" },
+      { "]b", "<cmd>BufferLineCycleNext<cr>", desc = "Next buffer" },
+      { "<leader>bd", "<cmd>bdelete<cr>",         desc = "Delete buffer" },
+    },
+    dependencies = { "echasnovski/mini.icons" },
+    opts = {
+      options = {
+        diagnostics = false,
+        show_close_icon = false,
+        show_buffer_close_icons = false,
+        separator_style = "thin",
+      },
+    },
+  },
+
+  {
+    "nvimtools/hydra.nvim",
+    config = function()
+      local Hydra = require("hydra")
+
+      Hydra({
+        name = "Window resize",
+        mode = "n",
+        body = "<C-w>",
+        heads = {
+          { "H", "<cmd>vertical resize -2<cr>" },
+          { "J", "<cmd>resize -2<cr>" },
+          { "K", "<cmd>resize +2<cr>" },
+          { "L", "<cmd>vertical resize +2<cr>" },
+        },
+      })
+    end,
+  },
+
   -- {
   --   "folke/noice.nvim",
   --   event = "VeryLazy",
