@@ -70,6 +70,9 @@ vim.keymap.set('n', '<C-w>j', '<C-w>J', { desc = 'Swap window down' })
 vim.keymap.set('n', '<C-w>k', '<C-w>K', { desc = 'Swap window up' })
 vim.keymap.set('n', '<C-w>l', '<C-w>L', { desc = 'Swap window right' })
 
+vim.keymap.set('n', '<leader>d', vim.diagnostic.open_float, { desc = 'Show diagnostic' })
+
+
 -- 相対パスをコピー
 vim.keymap.set('n', '<leader>yr', function()
   local path = vim.fn.expand('%')

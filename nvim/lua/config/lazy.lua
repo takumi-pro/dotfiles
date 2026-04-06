@@ -393,6 +393,68 @@ require("lazy").setup({
     end,
   },
 
+  {
+    "neovim/nvim-lspconfig",
+    config = function()
+      vim.lsp.config("clangd", {
+        cmd = { "clangd" },
+        filetypes = { "c", "cpp", "objc", "objcpp" },
+      })
+      vim.lsp.enable("clangd")
+
+      -- ruby-lsp（Ruby）
+      vim.lsp.config("ruby_lsp", {
+        cmd = { "ruby-lsp" },
+        filetypes = { "ruby" },
+        root_markers = { "Gemfile", ".git" },
+      })
+      vim.lsp.enable("ruby_lsp")
+
+      -- TypeScript/JavaScript
+      vim.lsp.config("ts_ls", {
+        cmd = { "typescript-language-server", "--stdio" },
+        filetypes = {
+          "javascript",
+          "javascriptreact",
+          "typescript",
+          "typescriptreact",
+        },
+        root_markers = {
+          "tsconfig.json",
+          "jsconfig.json",
+          "package.json",
+          ".git",
+        },
+      })
+      vim.lsp.enable("ts_ls")
+    end,
+  },
+
+  {
+    "folke/noice.nvim",
+    event = "VeryLazy",
+    dependencies = {
+      "MunifTanjim/nui.nvim",
+      "rcarriga/nvim-notify",
+    },
+    opts = {
+      lsp = {
+        override = {
+          ["vim.lsp.util.convert_input_to_markdown_lines"] = true,
+          ["vim.lsp.util.stylize_markdown"] = true,
+        },
+      },
+      presets = {
+        bottom_search = true,         -- 検索をボトムに表示
+        command_palette = true,       -- コマンドパレットスタイル
+        long_message_to_split = true, -- 長いメッセージをsplitで表示
+      },
+    },
+    keys = {
+      { "<leader>nd", "<cmd>NoiceDismiss<cr>", desc = "Dismiss notifications" },
+    },
+  },
+
   -- {
   --   "folke/noice.nvim",
   --   event = "VeryLazy",
