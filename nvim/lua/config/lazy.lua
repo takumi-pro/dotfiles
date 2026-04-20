@@ -30,6 +30,7 @@ require("lazy").setup({
         flavour = "frappe",
         integrations = {
           treesitter = true,
+          blink_cmp = true,
         },
       })
 
@@ -84,6 +85,7 @@ require("lazy").setup({
     end,
     opts = {
       default_file_explorer = true,
+      skip_confirm_for_simple_edits = true,
       keymaps = {
         ["<C-h>"] = false,
         ["<C-l>"] = false,
@@ -394,11 +396,30 @@ require("lazy").setup({
   },
 
   {
+    "saghen/blink.cmp",
+    version = "1.*",
+    dependencies = { "rafamadriz/friendly-snippets" },
+    opts = {
+      appearance = {
+        nerd_font_variant = "mono",
+      },
+      sources = {
+        default = { "lsp", "path", "snippets", "buffer" },
+      },
+      keymap = { preset = "default" },
+    },
+  },
+
+  {
     "neovim/nvim-lspconfig",
+    dependencies = { "saghen/blink.cmp" },
     config = function()
+      local capabilities = require("blink.cmp").get_lsp_capabilities()
+
       vim.lsp.config("clangd", {
         cmd = { "clangd" },
         filetypes = { "c", "cpp", "objc", "objcpp" },
+        capabilities = capabilities,
       })
       vim.lsp.enable("clangd")
 
@@ -407,6 +428,7 @@ require("lazy").setup({
         cmd = { "ruby-lsp" },
         filetypes = { "ruby" },
         root_markers = { "Gemfile", ".git" },
+        capabilities = capabilities,
       })
       vim.lsp.enable("ruby_lsp")
 
@@ -425,9 +447,26 @@ require("lazy").setup({
           "package.json",
           ".git",
         },
+        capabilities = capabilities,
       })
       vim.lsp.enable("ts_ls")
     end,
+  },
+
+  {
+    "rcarriga/nvim-notify",
+    opts = {
+      top_down = false,
+    },
+  },
+
+  {
+    "folke/which-key.nvim",
+    event = "VeryLazy",
+    opts = {},
+    keys = {
+      { "<leader>?", function() require("which-key").show({ global = false }) end, desc = "Buffer Local Keymaps" },
+    },
   },
 
   {

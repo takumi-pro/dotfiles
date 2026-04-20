@@ -6,13 +6,15 @@
 export PATH="/opt/homebrew/bin:$PATH" # Homebrew
 export PATH="/opt/homebrew/opt/mysql-client/bin:$PATH" # MySQL
 export PATH="/opt/homebrew/opt/postgresql@15/bin:$PATH" # PostgreSQL
-export PATH="/opt/homebrew/opt/ruby/bin:$PATH" # Ruby (Homebrew)
+# export PATH="/opt/homebrew/opt/ruby/bin:$PATH" # Ruby (Homebrew)
 export PATH="$HOME/go/bin:$PATH" # Go
 export PATH="$HOME/.pyenv/shims:$PATH" # Python (pyenv)
+export PATH="$HOME/.local/bin:$PATH"
+export PATH="${ASDF_DATA_DIR:-$HOME/.asdf}/shims:$PATH" # asdf (Node.js / pnpm 等)
 
 # Ruby (rbenv)
 if [[ -d ~/.rbenv ]]; then
-  export PATH="${HOME}/.rbenv/bin:${PATH}"
+  # export PATH="${HOME}/.rbenv/bin:${PATH}"
   eval "$(rbenv init -)"
 fi
 
