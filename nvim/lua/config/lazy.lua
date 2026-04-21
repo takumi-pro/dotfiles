@@ -51,9 +51,6 @@ require("lazy").setup({
           if not ok then
             return
           end
-          --local lang = vim.treesitter.language.get_lang(args.match)
-          --if not lang then return end
-          --pcall(vim.treesitter.start, args.buf, lang)
         end,
       })
     end,
@@ -117,6 +114,7 @@ require("lazy").setup({
     lazy = false,
     config = function()
       require("mini.icons").setup()
+      require("mini.icons").mock_nvim_web_devicons()
     end,
   },
 
@@ -398,13 +396,26 @@ require("lazy").setup({
   {
     "saghen/blink.cmp",
     version = "1.*",
-    dependencies = { "rafamadriz/friendly-snippets" },
+    dependencies = {
+      "rafamadriz/friendly-snippets",
+      "saghen/blink.compat",
+    },
     opts = {
       appearance = {
         nerd_font_variant = "mono",
       },
       sources = {
         default = { "lsp", "path", "snippets", "buffer" },
+        per_filetype = {
+          octo = { "octo", "path", "buffer" },
+        },
+        providers = {
+          octo = {
+            name = "octo",
+            module = "blink.compat.source",
+            score_offset = 100,
+          },
+        },
       },
       keymap = { preset = "default" },
     },
@@ -517,5 +528,36 @@ require("lazy").setup({
   --     },
   --   },
   -- },
+
+  {
+    "saghen/blink.compat",
+    version = "*",
+    lazy = true,
+    opts = {},
+  },
+
+  {
+    "pwntester/octo.nvim",
+    cmd = "Octo",
+    dependencies = {
+      "nvim-lua/plenary.nvim",
+      "nvim-telescope/telescope.nvim",
+      "echasnovski/mini.icons",
+    },
+    keys = {
+      { "<leader>gop", "<cmd>Octo pr list<cr>",      desc = "Octo: PR list" },
+      { "<leader>goi", "<cmd>Octo issue list<cr>",   desc = "Octo: Issue list" },
+      { "<leader>gos", "<cmd>Octo search<cr>",       desc = "Octo: search" },
+      { "<leader>gor", "<cmd>Octo repo view<cr>",    desc = "Octo: repo view" },
+      { "<leader>goc", "<cmd>Octo pr changes<cr>",   desc = "Octo: PR changes (diffview)" },
+      { "<leader>goR", "<cmd>Octo review start<cr>", desc = "Octo: start review" },
+    },
+    opts = {
+      enable_builtin = true,
+      picker = "telescope",
+      use_local_fs = false,
+      suppress_missing_scope = { projects_v2 = true },
+    },
+  },
 
 })
