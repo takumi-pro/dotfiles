@@ -81,18 +81,40 @@ keybindings:
         - key: V
           command: >-
             tmux new-window "nvim -c 'Octo pr edit {{.PrNumber}} {{.RepoName}}'"
+        - key: v
+          command: >-
+            tmux run-shell -b
+            "tmux display-popup -E -w 90% -h 90%
+            \"nvim -c 'Octo pr edit {{.PrNumber}} {{.RepoName}}'\""
         - key: D
           command: >-
-            tmux new-window "nvim -c 'Octo pr edit {{.PrNumber}} {{.RepoName}}' -c 'Octo pr changes'"
-        - key: C
+            tmux new-window -c "#{pane_current_path}"
+            "tmux rename-window '{{.RepoName}}#{{.PrNumber}}' &&
+            gh pr checkout {{.PrNumber}} &&
+            nvim -c 'DiffviewOpen origin/{{.BaseRefName}}...{{.HeadRefName}}' ||
+            { osascript -e 'display notification \"PR #{{.PrNumber}} {{.RepoName}} failed - check tmux window\" with title \"gh-dash D\" sound name \"Basso\"';
+            tmux display-message -d 5000 'PR #{{.PrNumber}} failed';
+            exec $SHELL; }"
+        - key: d
           command: >-
-            tmux new-window -c "$HOME/ghq/github.com/{{.RepoName}}" "gh pr checkout {{.PrNumber}}"
+            tmux run-shell -b
+            "tmux display-popup -E -w 90% -h 90% -d '#{pane_current_path}'
+            \"gh pr checkout {{.PrNumber}} &&
+            nvim -c 'DiffviewOpen origin/{{.BaseRefName}}...{{.HeadRefName}}' ||
+            { osascript -e 'display notification \\\"PR #{{.PrNumber}} {{.RepoName}} failed\\\" with title \\\"gh-dash d\\\" sound name \\\"Basso\\\"';
+            tmux display-message -d 5000 'PR #{{.PrNumber}} failed';
+            exec $SHELL; }\""
     issues:
         - key: V
           command: >-
             tmux new-window "nvim -c 'Octo issue edit {{.IssueNumber}} {{.RepoName}}'"
+        - key: v
+          command: >-
+            tmux run-shell -b
+            "tmux display-popup -E -w 90% -h 90%
+            \"nvim -c 'Octo issue edit {{.IssueNumber}} {{.RepoName}}'\""
 repoPaths:
-    "*/*": "~/ghq/github.com/*/*"
+    ":owner/:repo": "$HOME/codes/github.com/:owner/:repo"
 theme:
     ui:
         sectionsShowCount: true
