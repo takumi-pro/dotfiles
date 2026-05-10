@@ -3,47 +3,13 @@
 # PATH
 # =============================================================================
 
-export PATH="/opt/homebrew/bin:$PATH" # Homebrew
-export PATH="/opt/homebrew/opt/mysql-client/bin:$PATH" # MySQL
-export PATH="/opt/homebrew/opt/postgresql@15/bin:$PATH" # PostgreSQL
-# export PATH="/opt/homebrew/opt/ruby/bin:$PATH" # Ruby (Homebrew)
-export PATH="$HOME/go/bin:$PATH" # Go
-export PATH="$HOME/.pyenv/shims:$PATH" # Python (pyenv)
 export PATH="$HOME/.local/bin:$PATH"
-export PATH="${ASDF_DATA_DIR:-$HOME/.asdf}/shims:$PATH" # asdf (Node.js / pnpm 等)
-
-# Ruby (rbenv)
-if [[ -d ~/.rbenv ]]; then
-  # export PATH="${HOME}/.rbenv/bin:${PATH}"
-  eval "$(rbenv init -)"
-fi
-
-
-# =============================================================================
-# Google Cloud SDK
-# =============================================================================
-
-if [ -f "$HOME/google-cloud-sdk/path.zsh.inc" ]; then
-  source "$HOME/google-cloud-sdk/path.zsh.inc"
-fi
-
-if [ -f "$HOME/google-cloud-sdk/completion.zsh.inc" ]; then
-  source "$HOME/google-cloud-sdk/completion.zsh.inc"
-fi
 
 
 # =============================================================================
 # ツール設定
 # =============================================================================
 
-# Terraform補完
-autoload -U +X bashcompinit && bashcompinit
-complete -o nospace -C /opt/homebrew/bin/terraform terraform
-
-# GPG
-export GPG_TTY=$(tty)
-
-# fzf
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
 # =============================================================================
@@ -82,4 +48,10 @@ function ghv() {
 # =============================================================================
 source /opt/homebrew/share/zsh-autosuggestions/zsh-autosuggestions.zsh
 source /opt/homebrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+
+# =============================================================================
+# ホストマシン独自の設定をロード
+# =============================================================================
+
+[[ -f "$HOME/.zshrc.local" ]] && source "$HOME/.zshrc.local"
 

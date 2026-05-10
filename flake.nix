@@ -43,6 +43,14 @@
                 "zsh-syntax-highlighting"
                 "fzf"
                 "ghq"
+                "gh"
+                "neovim"
+                "tmux"
+                "lazydocker"
+                "ripgrep"
+              ];
+              casks = [
+                "font-hack-nerd-font"
               ];
             };
           }
@@ -58,6 +66,11 @@
       darwinConfigurations.takumi = mkDarwinConfig {
         username = "takumi";
         hostname = "takumi";
+      };
+
+      darwinConfigurations.takumi-igarashi = mkDarwinConfig {
+        username = "takumi-igarashi";
+        hostname = "takumi-igarashi";
       };
     };
 }

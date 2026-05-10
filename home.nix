@@ -38,22 +38,6 @@
         source /opt/homebrew/share/zsh-autosuggestions/zsh-autosuggestions.zsh
         source /opt/homebrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
-        # Ruby (rbenv)
-        if [[ -d "$HOME/.rbenv" ]]; then
-          eval "$(rbenv init -)"
-        fi
-
-        # Google Cloud SDK
-        [[ -f "$HOME/google-cloud-sdk/path.zsh.inc" ]] && source "$HOME/google-cloud-sdk/path.zsh.inc"
-        [[ -f "$HOME/google-cloud-sdk/completion.zsh.inc" ]] && source "$HOME/google-cloud-sdk/completion.zsh.inc"
-
-        # Terraform補完
-        autoload -U +X bashcompinit && bashcompinit
-        complete -o nospace -C /opt/homebrew/bin/terraform terraform
-
-        # GPG
-        export GPG_TTY=$(tty)
-
         # fzf（Brew管理・移行まで暫定）
         [[ -f "$HOME/.fzf.zsh" ]] && source "$HOME/.fzf.zsh"
 
@@ -71,6 +55,7 @@
         }
 
         [[ -f "$HOME/.p10k.zsh" ]] && source "$HOME/.p10k.zsh"
+        [[ -f "$HOME/.zshrc.local" ]] && source "$HOME/.zshrc.local"
       ''
     ];
   };
