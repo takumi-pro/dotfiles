@@ -25,7 +25,11 @@ vim.opt.hlsearch = true        -- 検索結果をハイライト
 vim.opt.incsearch = true       -- インクリメンタルサーチ
 vim.opt.autoread = true
 vim.opt.signcolumn = "yes"
-vim.opt.cmdheight = 0  -- 普段は非表示
+vim.opt.cmdheight = 0          -- 普段は非表示
+vim.opt.scrolloff = 8          -- スクロール余白
+vim.opt.undofile = true
+vim.opt.splitright = true  -- 縦分割は右に開く
+vim.opt.splitbelow = true  -- 横分割は下に開く
 
 -- ファイル変更時に自動リロード
 vim.api.nvim_create_autocmd({ "FocusGained", "BufEnter", "CursorHold", "CursorHoldI" }, {
